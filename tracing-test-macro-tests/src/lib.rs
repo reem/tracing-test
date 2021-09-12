@@ -33,4 +33,13 @@ mod tests {
         assert!(logs_contain("Logging from a non-async test"));
         assert!(!logs_contain("This was never logged"));
     }
+
+    #[traced_test("tracing_test_macro_tests=warn")]
+    #[test]
+    fn annotate_test_with_custom_filter() {
+        warn!("Warn logging captured");
+        info!("Info logging not captured with configurable filter");
+        assert!(logs_contain("Warn logging captured"));
+        assert!(!logs_contain("Info logging not captured"));
+    }
 }
